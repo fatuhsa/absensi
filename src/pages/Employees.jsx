@@ -115,7 +115,12 @@ export default function Employees() {
                   <div className="emp-avatar">{emp.name?.[0]?.toUpperCase()}</div>
                   <div className="emp-main">
                     <strong>{emp.name}</strong>
-                    <span className="muted">{emp.position || '—'} · {emp.email}</span>
+                    <span className="muted">
+                      {emp.position || '—'} · {emp.email}
+                    </span>
+                    <span className="muted">
+                      @{emp.username || 'tanpa akun'}
+                    </span>
                   </div>
                   <div className="emp-actions">
                     <button className="icon-btn" onClick={() => openEdit(emp)} aria-label={`Edit ${emp.name}`}>

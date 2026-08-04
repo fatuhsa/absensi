@@ -59,10 +59,14 @@ if (!cols.some((c) => c.name === 'overtime_out_photo')) {
   db.exec(`ALTER TABLE attendance ADD COLUMN overtime_out_photo TEXT`)
 }
 
+// Bcrypt cost factor. 12 is a reasonable production default (login latency
+// ~300ms; cheap to add). Higher = slower but more resistant to brute force.
+export const BCRYPT_ROUNDS = 12
+
 function seed() {
   const adminCount = db.prepare('SELECT COUNT(*) AS c FROM users WHERE role = ?').get('admin').c
   if (adminCount === 0) {
-    const hash = bcrypt.hashSync('admin123', 10)
+    const hash = bcrypt.hashSync('admin123', BCRYPT_ROUNDS)
     db.prepare('INSERT INTO users (username, password_hash, role) VALUES (?, ?, ?)')
       .run('admin', hash, 'admin')
   }
@@ -70,7 +74,7 @@ function seed() {
   // Admin akun untuk sanix
   const sanix = db.prepare('SELECT id FROM users WHERE username = ?').get('sanix')
   if (!sanix) {
-    const hash = bcrypt.hashSync('sanixmon', 10)
+    const hash = bcrypt.hashSync('sanixmon', BCRYPT_ROUNDS)
     db.prepare('INSERT INTO users (username, password_hash, role) VALUES (?, ?, ?)')
       .run('sanix', hash, 'admin')
   }

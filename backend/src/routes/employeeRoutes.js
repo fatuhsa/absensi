@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs'
-import { db } from '../db.js'
+import { db, BCRYPT_ROUNDS } from '../db.js'
 
 export default function employeeRoutes(req, res) {
   const { method, path } = req
@@ -27,7 +27,7 @@ export default function employeeRoutes(req, res) {
         .run(name, email, position || null)
       const employeeId = empResult.lastInsertRowid
 
-      const hash = bcrypt.hashSync(password, 10)
+      const hash = bcrypt.hashSync(password, BCRYPT_ROUNDS)
       db.prepare(
         'INSERT INTO users (username, password_hash, role, employee_id) VALUES (?, ?, ?, ?)'
       ).run(username, hash, 'employee', employeeId)
@@ -59,7 +59,7 @@ export default function employeeRoutes(req, res) {
         db.prepare('UPDATE users SET username = ? WHERE id = ?').run(username, user.id)
       }
       if (password) {
-        const hash = bcrypt.hashSync(password, 10)
+        const hash = bcrypt.hashSync(password, BCRYPT_ROUNDS)
         db.prepare('UPDATE users SET password_hash = ? WHERE id = ?').run(hash, user.id)
       }
     }

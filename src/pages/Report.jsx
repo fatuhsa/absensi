@@ -7,7 +7,8 @@ import Alert from '../components/Alert.jsx'
 import Spinner from '../components/Spinner.jsx'
 import Empty from '../components/Empty.jsx'
 import Modal from '../components/Modal.jsx'
-import { LogIn, LogOut, Moon, AlarmClock, Camera } from 'lucide-react'
+import { LogIn, LogOut, Moon, AlarmClock } from 'lucide-react'
+import PhotoLink from '../components/PhotoLink.jsx'
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des']
 
@@ -163,15 +164,7 @@ export default function Report() {
                 </div>
                 <div className="history-side">
                   {e.photo && (
-                    <a
-                      href={e.photo}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="photo-link"
-                      aria-label={`Lihat foto ${e.label} ${e.date}`}
-                    >
-                      <Camera size={18} />
-                    </a>
+                    <PhotoLink photo={e.photo} label={`Lihat foto ${e.label} ${e.date}`} />
                   )}
                 </div>
               </li>

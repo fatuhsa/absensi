@@ -13,6 +13,11 @@ dist
 dist-ssr
 *.local
 
+# Env / secrets
+.env
+.env.*
+!.env.example
+
 # Runtime data
 backend/*.db
 backend/*.db-shm
@@ -22,6 +27,10 @@ backend/uploads/*
 
 # Tooling
 .openclaude/
+import ini.md
+
+# Session / conversation exports
+*-this-session-is-being-continued-from-a-previous-*.json
 
 # Editor directories and files
 .vscode/*

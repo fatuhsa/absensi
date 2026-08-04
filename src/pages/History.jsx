@@ -5,7 +5,8 @@ import Card from '../components/Card.jsx'
 import Alert from '../components/Alert.jsx'
 import Spinner from '../components/Spinner.jsx'
 import Empty from '../components/Empty.jsx'
-import { LogIn, LogOut, Moon, AlarmClock, Camera } from 'lucide-react'
+import { LogIn, LogOut, Moon, AlarmClock } from 'lucide-react'
+import PhotoLink from '../components/PhotoLink.jsx'
 
 // Flatten a daily attendance record into individual absen events (newest first).
 function toEvents(h) {
@@ -57,15 +58,7 @@ export default function History() {
                   </div>
                   <div className="history-side">
                     {e.photo && (
-                      <a
-                        href={e.photo}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="photo-link"
-                        aria-label={`Lihat foto ${e.label} ${e.date}`}
-                      >
-                        <Camera size={18} />
-                      </a>
+                      <PhotoLink photo={e.photo} label={`Lihat foto ${e.label} ${e.date}`} />
                     )}
                   </div>
                 </li>

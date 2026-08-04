@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { api, setSession } from '../api.js'
 import Button from '../components/Button.jsx'
 import Input from '../components/Input.jsx'
@@ -57,9 +57,6 @@ export default function Login() {
             Masuk
           </Button>
         </form>
-        <p className="login-sub" style={{ marginTop: 16 }}>
-          Belum punya akun? <Link to="/register">Daftar</Link>
-        </p>
       </div>
     </div>
   )

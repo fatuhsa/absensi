@@ -1,6 +1,13 @@
 import jwt from 'jsonwebtoken'
 
-const SECRET = process.env.JWT_SECRET || 'absensi-dev-secret-change-me'
+const SECRET =
+  process.env.JWT_SECRET ||
+  (process.env.NODE_ENV === 'production' ? null : 'absensi-dev-secret-change-me')
+
+if (!SECRET) {
+  throw new Error('JWT_SECRET wajib diatur pada environment production')
+}
+
 const EXPIRES = '8h'
 
 export function signToken(user) {

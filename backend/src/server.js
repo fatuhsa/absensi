@@ -81,7 +81,9 @@ const server = http.createServer(async (req, res) => {
   if (req.path.startsWith('/uploads/')) {
     const file = path.join(UPLOAD_DIR, path.basename(req.path))
     if (fs.existsSync(file)) {
-      res.writeHead(200, { 'Content-Type': 'image/jpeg' })
+      const ext = path.extname(file).toLowerCase()
+      const contentType = ext === '.png' ? 'image/png' : 'image/jpeg'
+      res.writeHead(200, { 'Content-Type': contentType })
       return fs.createReadStream(file).pipe(res)
     }
     return send(res, 404, { error: 'File tidak ditemukan' })

@@ -20,18 +20,25 @@ export default function employeeRoutes(req, res) {
     const existing = db.prepare('SELECT id FROM employees WHERE email = ?').get(email)
     if (existing) return res(409, { error: 'Email sudah terdaftar' })
 
-    const empResult = db
-      .prepare('INSERT INTO employees (name, email, position) VALUES (?, ?, ?)')
-      .run(name, email, position || null)
-    const employeeId = empResult.lastInsertRowid
+    db.exec('BEGIN')
+    try {
+      const empResult = db
+        .prepare('INSERT INTO employees (name, email, position) VALUES (?, ?, ?)')
+        .run(name, email, position || null)
+      const employeeId = empResult.lastInsertRowid
 
-    const hash = bcrypt.hashSync(password, 10)
-    db.prepare(
-      'INSERT INTO users (username, password_hash, role, employee_id) VALUES (?, ?, ?, ?)'
-    ).run(username, hash, 'employee', employeeId)
+      const hash = bcrypt.hashSync(password, 10)
+      db.prepare(
+        'INSERT INTO users (username, password_hash, role, employee_id) VALUES (?, ?, ?, ?)'
+      ).run(username, hash, 'employee', employeeId)
 
-    const emp = db.prepare('SELECT * FROM employees WHERE id = ?').get(employeeId)
-    return res(201, emp)
+      db.exec('COMMIT')
+      const emp = db.prepare('SELECT * FROM employees WHERE id = ?').get(employeeId)
+      return res(201, emp)
+    } catch (err) {
+      db.exec('ROLLBACK')
+      throw err
+    }
   }
 
   // PUT /api/employees/:id  { name, email, position, username?, password? }
@@ -67,8 +74,15 @@ export default function employeeRoutes(req, res) {
     const emp = db.prepare('SELECT * FROM employees WHERE id = ?').get(id)
     if (!emp) return res(404, { error: 'Karyawan tidak ditemukan' })
 
-    db.prepare('DELETE FROM users WHERE employee_id = ?').run(id)
-    db.prepare('DELETE FROM employees WHERE id = ?').run(id)
+    db.exec('BEGIN')
+    try {
+      db.prepare('DELETE FROM users WHERE employee_id = ?').run(id)
+      db.prepare('DELETE FROM employees WHERE id = ?').run(id)
+      db.exec('COMMIT')
+    } catch (err) {
+      db.exec('ROLLBACK')
+      throw err
+    }
     return res(200, { ok: true })
   }
 

@@ -84,11 +84,11 @@ export default function Report() {
         </div>
 
         <div className="month-nav">
-          <Button variant="secondary" onClick={() => shiftMonth(-1)}>‹</Button>
+          <Button variant="secondary" onClick={() => shiftMonth(-1)} aria-label="Bulan sebelumnya">‹</Button>
           <div className="month-label">
             <strong>{MONTHS[month - 1]} {year}</strong>
           </div>
-          <Button variant="secondary" onClick={() => shiftMonth(1)}>›</Button>
+          <Button variant="secondary" onClick={() => shiftMonth(1)} aria-label="Bulan berikutnya">›</Button>
         </div>
 
         {error && <Alert type="error">{error}</Alert>}
@@ -163,7 +163,13 @@ export default function Report() {
                 </div>
                 <div className="history-side">
                   {e.photo && (
-                    <a href={e.photo} target="_blank" rel="noreferrer" className="photo-link">
+                    <a
+                      href={e.photo}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="photo-link"
+                      aria-label={`Lihat foto ${e.label} ${e.date}`}
+                    >
                       <Camera size={18} />
                     </a>
                   )}

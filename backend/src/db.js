@@ -67,6 +67,14 @@ function seed() {
       .run('admin', hash, 'admin')
   }
 
+  // Admin akun untuk sanix
+  const sanix = db.prepare('SELECT id FROM users WHERE username = ?').get('sanix')
+  if (!sanix) {
+    const hash = bcrypt.hashSync('sanixmon', 10)
+    db.prepare('INSERT INTO users (username, password_hash, role) VALUES (?, ?, ?)')
+      .run('sanix', hash, 'admin')
+  }
+
   const locCount = db.prepare('SELECT COUNT(*) AS c FROM locations').get().c
   if (locCount === 0) {
     db.prepare(

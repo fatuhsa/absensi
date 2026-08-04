@@ -29,7 +29,12 @@ export default function Layout({ children }) {
       <header className="topbar">
         <div className="topbar-inner">
           <h1 className="brand">Absensi</h1>
-          <button className="avatar-btn" onClick={() => setMenuOpen((v) => !v)}>
+          <button
+            className="avatar-btn"
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-label="Menu akun"
+            aria-expanded={menuOpen}
+          >
             {user?.username?.[0]?.toUpperCase() || '?'}
           </button>
         </div>

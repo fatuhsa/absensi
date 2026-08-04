@@ -1,3 +1,6 @@
+// Force seluruh backend memakai waktu WIB (UTC+7) untuk tanggal & jam absensi.
+process.env.TZ = 'Asia/Jakarta'
+
 import http from 'node:http'
 import fs from 'node:fs'
 import path from 'node:path'

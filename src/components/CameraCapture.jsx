@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Camera, RefreshCw } from 'lucide-react'
 import Button from './Button.jsx'
 import Alert from './Alert.jsx'
 
@@ -72,11 +73,11 @@ export default function CameraCapture({ onCapture, onError }) {
       <div className="camera-actions">
         {!photo ? (
           <Button full onClick={capture} disabled={!ready}>
-            📸 Ambil Foto
+            <Camera size={18} /> Ambil Foto
           </Button>
         ) : (
           <Button full variant="secondary" onClick={retake}>
-            ↺ Ambil Ulang
+            <RefreshCw size={18} /> Ambil Ulang
           </Button>
         )}
       </div>

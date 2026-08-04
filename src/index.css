@@ -12,26 +12,52 @@
   --gray-700: #334155;
   --gray-900: #0f172a;
   --shadow: 0 1px 3px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 6px 16px rgba(15, 23, 42, 0.1);
   --radius: 12px;
   --radius-sm: 8px;
   --topbar-h: 56px;
   --bottomnav-h: 64px;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * {
   box-sizing: border-box;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   background: var(--gray-100);
   color: var(--gray-900);
   -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
 }
 
 #root {
   min-height: 100vh;
+}
+
+/* Visible, consistent focus ring for keyboard navigation (WCAG 2.4.7). */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Respect users who prefer reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* ---------- Layout ---------- */
@@ -77,6 +103,16 @@ body {
   color: #fff;
   font-weight: 700;
   cursor: pointer;
+  transition: background-color 0.15s var(--ease), transform 0.05s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.avatar-btn:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.avatar-btn:active {
+  transform: scale(0.94);
 }
 
 .menu {
@@ -104,6 +140,7 @@ body {
 
 .menu-item {
   width: 100%;
+  min-height: 44px;
   padding: 12px 16px;
   border: none;
   background: #fff;
@@ -111,6 +148,7 @@ body {
   cursor: pointer;
   color: var(--red);
   font-weight: 600;
+  transition: background-color 0.15s var(--ease);
 }
 
 .menu-item:hover {
@@ -137,6 +175,7 @@ body {
 
 .nav-item {
   flex: 1;
+  min-height: var(--bottomnav-h);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -145,6 +184,12 @@ body {
   color: var(--gray-500);
   text-decoration: none;
   font-size: 11px;
+  transition: color 0.15s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nav-item:active {
+  transform: scale(0.96);
 }
 
 .nav-item .nav-icon {
@@ -186,6 +231,7 @@ body {
   box-shadow: var(--shadow);
   margin-bottom: 16px;
   overflow: hidden;
+  transition: box-shadow 0.2s var(--ease);
 }
 
 .card-head {
@@ -219,10 +265,12 @@ body {
   border: none;
   border-radius: var(--radius-sm);
   padding: 12px 16px;
+  min-height: 44px;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: opacity 0.15s, transform 0.05s;
+  transition: background-color 0.15s var(--ease), color 0.15s var(--ease),
+    box-shadow 0.15s var(--ease), transform 0.05s var(--ease), opacity 0.15s var(--ease);
 }
 
 .btn:active {
@@ -241,10 +289,16 @@ body {
 .btn-primary {
   background: var(--primary);
   color: #fff;
+  box-shadow: 0 1px 2px rgba(37, 99, 235, 0.3);
 }
 
 .btn-primary:hover {
   background: var(--primary-dark);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+}
+
+.btn-primary:active {
+  box-shadow: 0 1px 2px rgba(37, 99, 235, 0.3);
 }
 
 .btn-secondary {
@@ -284,12 +338,14 @@ body {
   font-size: 15px;
   width: 100%;
   background: #fff;
+  transition: border-color 0.15s var(--ease), box-shadow 0.15s var(--ease);
 }
 
 .input:focus {
   outline: 2px solid var(--primary);
   outline-offset: -1px;
   border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }
 
 .input-error {
@@ -489,7 +545,16 @@ body {
 }
 
 .login-logo {
-  font-size: 44px;
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 22px;
+  background: linear-gradient(160deg, var(--primary) 0%, #1e40af 100%);
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.35);
 }
 
 .login-title {
@@ -552,6 +617,7 @@ body {
 }
 
 .segment {
+  min-height: 40px;
   padding: 10px 4px;
   border: none;
   background: transparent;
@@ -560,6 +626,8 @@ body {
   font-weight: 600;
   color: var(--gray-500);
   cursor: pointer;
+  transition: color 0.15s var(--ease), background-color 0.15s var(--ease), box-shadow 0.15s var(--ease);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .segment.active {
@@ -655,12 +723,22 @@ body {
   background: transparent;
   font-size: 18px;
   cursor: pointer;
-  padding: 6px;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: var(--radius-sm);
+  transition: background-color 0.15s var(--ease), transform 0.05s var(--ease);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .icon-btn:hover {
   background: var(--gray-100);
+}
+
+.icon-btn:active {
+  transform: scale(0.94);
 }
 
 /* ---------- Modal ---------- */

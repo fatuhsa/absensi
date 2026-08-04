@@ -57,7 +57,13 @@ export default function History() {
                   </div>
                   <div className="history-side">
                     {e.photo && (
-                      <a href={e.photo} target="_blank" rel="noreferrer" className="photo-link">
+                      <a
+                        href={e.photo}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="photo-link"
+                        aria-label={`Lihat foto ${e.label} ${e.date}`}
+                      >
                         <Camera size={18} />
                       </a>
                     )}

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Pencil, Trash2 } from 'lucide-react'
 import { api } from '../api.js'
 import Layout from '../components/Layout.jsx'
 import Card from '../components/Card.jsx'
@@ -117,11 +118,11 @@ export default function Employees() {
                     <span className="muted">{emp.position || '—'} · {emp.email}</span>
                   </div>
                   <div className="emp-actions">
-                    <button className="icon-btn" onClick={() => openEdit(emp)} aria-label="Edit">
-                      ✏️
+                    <button className="icon-btn" onClick={() => openEdit(emp)} aria-label={`Edit ${emp.name}`}>
+                      <Pencil size={18} />
                     </button>
-                    <button className="icon-btn danger" onClick={() => remove(emp)} aria-label="Hapus">
-                      🗑️
+                    <button className="icon-btn danger" onClick={() => remove(emp)} aria-label={`Hapus ${emp.name}`}>
+                      <Trash2 size={18} />
                     </button>
                   </div>
                 </div>
